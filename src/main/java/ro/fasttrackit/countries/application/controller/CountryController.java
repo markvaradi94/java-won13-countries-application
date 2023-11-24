@@ -3,8 +3,7 @@ package ro.fasttrackit.countries.application.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ro.fasttrackit.countries.application.exception.ResourceNotFoundException;
-import ro.fasttrackit.countries.application.model.Country;
-import ro.fasttrackit.countries.application.model.CountryUpdate;
+import ro.fasttrackit.countries.application.model.*;
 import ro.fasttrackit.countries.application.service.CountryService;
 
 import java.util.List;
@@ -16,8 +15,8 @@ public class CountryController {
     private final CountryService service;
 
     @GetMapping
-    List<Country> getAll(@RequestParam(required = false) String continent) {
-        return service.filterCountries(continent);
+    List<Country> getAll(CountryFilters filters) {
+        return service.filterCountries(filters);
     }
 
     @GetMapping("{id}")
@@ -45,5 +44,20 @@ public class CountryController {
     Country deleteCountry(@PathVariable long id) {
         return service.delete(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Could not find country with id %s".formatted(id), id));
+    }
+
+    @PostMapping("{countryId}/cities")
+    Country addCity(@PathVariable long countryId, @RequestBody City newCity) {
+        return service.addCityToCountry(countryId, newCity);
+    }
+
+    @GetMapping("{countryId}/cities")
+    List<City> getCities(@PathVariable long countryId) {
+        return service.getCitiesForCountry(countryId);
+    }
+
+    @PostMapping("{countryId}/neighbours")
+    Country addNeighbour(@PathVariable long countryId, @RequestBody NeighbourRequest neighbour) {
+        return service.addNeighbourToCountry(countryId, neighbour);
     }
 }
