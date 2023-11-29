@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("countries")
 @RequiredArgsConstructor
+@CrossOrigin(value = "http://localhost:4200")
 public class CountryController {
     private final CountryService service;
 

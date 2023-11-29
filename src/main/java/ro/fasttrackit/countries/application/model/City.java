@@ -8,6 +8,7 @@ import lombok.experimental.FieldNameConstants;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static ro.fasttrackit.countries.application.model.Country.Fields.capital;
 
+@With
 @Getter
 @Setter
 @Entity
@@ -29,4 +30,8 @@ public class City {
     @JsonIgnore
     @ManyToOne  // --> COUNTRY_ID --> foreign key to COUNTRY(ID)
     private Country country;
+
+    public City(String name) {
+        this.name = name;
+    }
 }

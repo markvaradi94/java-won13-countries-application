@@ -83,6 +83,9 @@ public class CountryService {
     public Country update(long id, CountryUpdate countryUpdate) {
         Country country = getOrThrow(id);
         Country updatedCountry = country
+                .withName(countryUpdate.name() == null ? country.getName() : countryUpdate.name())
+                .withCapital(countryUpdate.capital() == null ? country.getCapital() : country.getCapital().withName(countryUpdate.capital()))
+                .withContinent(countryUpdate.continent() == null ? country.getContinent() : Continent.of(countryUpdate.continent()))
                 .withArea(countryUpdate.area() == null ? country.getArea() : countryUpdate.area())
                 .withPopulation(countryUpdate.population() == null ? country.getPopulation() : countryUpdate.population());
 
