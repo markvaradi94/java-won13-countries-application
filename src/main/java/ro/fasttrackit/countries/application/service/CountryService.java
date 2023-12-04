@@ -49,6 +49,8 @@ public class CountryService {
     }
 
     public Country add(Country newCountry) {
+        City capital = newCountry.getCapital();
+        capital.setCountry(newCountry);
         return countryRepository.save(newCountry);
     }
 
