@@ -35,9 +35,6 @@ public class CountryDao {  // DAO == Data Access Object
         ofNullable(filters.name())
                 .ifPresent(countryName -> predicates.add(criteriaBuilder.like(criteriaBuilder.lower(country.get(name)), "%" + countryName.toLowerCase() + "%")));
 
-        ofNullable(filters.capital())
-                .ifPresent(countryCapital -> predicates.add(criteriaBuilder.equal(country.get(capital.toLowerCase()), countryCapital.toLowerCase())));
-
         ofNullable(filters.minPopulation())
                 .ifPresent(minPopulation -> predicates.add(criteriaBuilder.greaterThanOrEqualTo(country.get(population), minPopulation)));
 
